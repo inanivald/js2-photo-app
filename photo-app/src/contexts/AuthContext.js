@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react'
 import { auth } from '../firebase'
-import { BounceLoader } from 'react-spinners'
+import { ClipLoader } from 'react-spinners'
 
 const AuthContext = createContext()
 
@@ -67,7 +67,7 @@ const AuthContextProvider = (props) => {
 
 	return (
 		<AuthContext.Provider value={contextValues}>
-			{loading && (<div className="d-flex justify-content-center my-5"><BounceLoader color={"#888"} size={100} /></div>)}
+			{loading && (<div className="d-flex justify-content-center my-5"><ClipLoader color={"#888"} size={100} /></div>)}
 			{!loading && props.children}
 		</AuthContext.Provider>
 	)

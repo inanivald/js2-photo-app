@@ -23,11 +23,14 @@ const Navigation = () => {
 						<Nav className="ml-auto">
 							{
 								currentUser ? (
+									<>
+									<NavLink to="/albums" className="nav-link">Albums</NavLink>
 									<NavDropdown title={currentUser.displayName || currentUser.email} id="basic-nav-dropdown">
 										<NavLink to="/update-profile" className="dropdown-item">Update Profile</NavLink>
 										<NavDropdown.Divider />
 										<NavLink to="/login" className="dropdown-item" onClick={handleLogout}>Log Out</NavLink>
 									</NavDropdown>
+									</>
 								) : (
 									<NavLink to="/login" className="nav-link">Login</NavLink>
 								)

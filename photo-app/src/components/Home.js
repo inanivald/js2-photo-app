@@ -8,7 +8,7 @@ const Home = () => {
 		<div>
 			<p>This is my home component.</p>
 
-			<p>You are logged in as <strong>{currentUser && currentUser.email}</strong></p>
+			<p>You are logged in as <strong>{currentUser && currentUser.uid}</strong></p>
 		</div>
 	)
 }
