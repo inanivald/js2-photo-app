@@ -7,9 +7,7 @@ import {SRLWrapper} from "simple-react-lightbox"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faThumbsDown, faThumbsUp } from '@fortawesome/free-solid-svg-icons'
 import { ClipLoader } from 'react-spinners'
-import { useAuth } from '../../contexts/AuthContext'
-
-
+import moment from 'moment'
 
 const ReviewAlbum = () => {
     const [likedImages, setLikedImages] = useState([]);
@@ -19,9 +17,6 @@ const ReviewAlbum = () => {
     const navigate = useNavigate();
     const {album, images, loading} = useAlbum(albumId);
     const [error, setError] = useState(false);
-    const { currentUser } = useAuth()
-
-
 
     useEffect(() => {
         async function getImages() {
@@ -36,7 +31,7 @@ const ReviewAlbum = () => {
             setReviewedImages(imageList);
         }
         getImages();
-    }, [images, currentUser.uid]);
+    }, [images]);
 
     useEffect(() => {
         let likedArray = reviewedImages.filter(image => {
@@ -53,14 +48,17 @@ const ReviewAlbum = () => {
         }
     }, [reviewedImages])
 
-    const updateimageReaction = (image, reaction) => {
+    const updateImage = (image, reaction) => {
 
         let updatedArray = reviewedImages.map(item => {
             if (item.id === image.id) {
                 return {
                     id: item.id,
                     like: reaction,
-                    url: image.url
+                    name: image.name,
+				    size: image.size,
+				    type: image.type,
+                    url: image.url,
                 }
             } else {
                 return item;
@@ -71,8 +69,7 @@ const ReviewAlbum = () => {
     }
 
     const handleSendReview = async () => {
-        console.log('sent review', reviewedImages);
-        const title = `${album.title}-${Date.now()}`;
+        const title = `${album.title} - ${moment().format("MMMM Do YYYY, h:mm:ss a")}`;
 
         setError(false);
 
@@ -82,15 +79,16 @@ const ReviewAlbum = () => {
                 owner: album.owner
             });
             
-            await likedImages.forEach(image => {
-              const imgRef = db.collection('images').add(image)
-                db.collection('images').doc(imgRef.id).update({
-                    album: db.collection('albums').doc(docRef.id)
-                })
-            
+            await likedImages.forEach(likedImage => {
+
+                if (albumId) {
+                    likedImage.album = db.collection('albums').doc(docRef.id)
+                    likedImage.owner = album.owner
+                }
+              db.collection('images').add(likedImage)
         })
 
-            navigate(`/albums`);
+            navigate('/review/thanks');
         } catch (err) {
             setError(err.message);
         }
@@ -110,7 +108,6 @@ const ReviewAlbum = () => {
     return (
         <Container fluid className="px-4">
             <h2 className="text-center">You are currently reviewing {album && album.title}</h2>
-            <p className="text-center mb-2">{album && album.description}</p>
 
             <SRLWrapper>
                 <Row className="justify-content-md-center">
@@ -128,7 +125,7 @@ const ReviewAlbum = () => {
                                             <button 
                                                 style={{ border: "none", backgroundColor: "transparent" }} 
                                                 className="thumbs-up"
-                                                onClick={() => updateimageReaction(image, true)} >
+                                                onClick={() => updateImage(image, true)} >
                                                     <FontAwesomeIcon 
                                                         icon={faThumbsUp}
                                                         style={{ fontSize: "1.5em", margin: "0 0.5em" }} 
@@ -138,7 +135,7 @@ const ReviewAlbum = () => {
                                             <button 
                                                 style={{ border: "none", backgroundColor: "transparent" }} 
                                                 className="thumbs-down"
-                                                onClick={() => updateimageReaction(image, false)} >
+                                                onClick={() => updateImage(image, false)} >
                                                     <FontAwesomeIcon 
                                                         icon={faThumbsDown} 
                                                         style={{ fontSize: "1.5em", margin: "0 0.5em"}} 

@@ -16,6 +16,7 @@ import Confirmation from './components/Confirmation'
 import UpdateProfile from './components/UpdateProfile'
 import AuthContextProvider from './contexts/AuthContext'
 import ReviewAlbum from './components/albums/ReviewAlbum'
+import ReviewThanks from './components/albums/ReviewThanks'
 import './assets/scss/app.scss'
 
 const App = () => {
@@ -49,6 +50,10 @@ const App = () => {
 							<Route path="/review/:albumId">
 								<ReviewAlbum />
 							</Route>
+
+							<Route path="/review/thanks">
+							<ReviewThanks />
+						</Route>
 
 
 							<Route path="/reset">
