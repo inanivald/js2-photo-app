@@ -46,8 +46,8 @@ const EditAlbumTitle = ({ album }) => {
 					<Form.Label>New album title</Form.Label>
 					<Form.Control type="title" onChange={handleTitleChange} placeholder={album.title} value={newAlbumTitle} autoFocus />
 					
-					{album.title && album.title.length < 3 && 
-						<Form.Text className="text__alert">The album title must be at least 3 characters long.</Form.Text>
+					{album.title && album.title.length < 4 && 
+						<Form.Text className="text__alert">The album title must be at least 4 characters long.</Form.Text>
 					}
 				</Form.Group>
 				<Button  disabled={loading} type="submit">Update</Button>

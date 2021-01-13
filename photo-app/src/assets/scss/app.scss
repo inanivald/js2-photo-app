@@ -8,3 +8,11 @@
 .edit_album_title { 
      cursor: pointer; 
     }
+    
+.thumbs-up,
+.thumbs-down {
+     color: gray;
+}
+.thumb-active {
+     color: rgb(71, 71, 241);
+}

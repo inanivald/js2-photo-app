@@ -37,7 +37,7 @@ const UploadAlbumImage = ({ albumId }) => {
 		setUploadImage(acceptedFiles[0]);
 	}, []);
 
-	const { getRootProps, getInputProps, isDragActive, acceptedFiles, isDragAccept, isDragReject } = useDropzone({
+	const { getRootProps, getInputProps, isDragActive, acceptedFiles, isDragAccept, isDragReject } = useDropzone({
 		accept: 'image/gif, image/jpeg, image/png',
 		onDrop
 	});

@@ -15,6 +15,7 @@ import Signup from './components/Signup'
 import Confirmation from './components/Confirmation'
 import UpdateProfile from './components/UpdateProfile'
 import AuthContextProvider from './contexts/AuthContext'
+import ReviewAlbum from './components/albums/ReviewAlbum'
 import './assets/scss/app.scss'
 
 const App = () => {
@@ -44,6 +45,11 @@ const App = () => {
 									<Album />
 								</Route>
 							</AuthRoute>
+
+							<Route path="/review/:albumId">
+								<ReviewAlbum />
+							</Route>
+
 
 							<Route path="/reset">
 								<ResetPassword />
