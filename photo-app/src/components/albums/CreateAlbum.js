@@ -29,7 +29,9 @@ const CreateAlbum = () => {
 			const docRef = await db.collection('albums').add({
 				title,
 				owner: currentUser.uid,
+				reviewedAlbum: false
 			})
+			
 
 			navigate(`/albums/${docRef.id}`)
 		} catch (e) {

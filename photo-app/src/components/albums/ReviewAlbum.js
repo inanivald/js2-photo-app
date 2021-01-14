@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { db } from '../../firebase'
+import { db, storage } from '../../firebase'
 import useAlbum from '../../hooks/useAlbum'
 import { Alert, Button, Col, Container, Card, Row } from 'react-bootstrap'
 import {SRLWrapper} from "simple-react-lightbox"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faThumbsDown, faThumbsUp } from '@fortawesome/free-solid-svg-icons'
+import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { ClipLoader } from 'react-spinners'
 import moment from 'moment'
 
@@ -53,11 +53,11 @@ const ReviewAlbum = () => {
         let updatedArray = reviewedImages.map(item => {
             if (item.id === image.id) {
                 return {
-                    id: item.id,
                     like: reaction,
                     name: image.name,
+                    path: `images/guest/${image.name}`,
 				    size: image.size,
-				    type: image.type,
+                    type: image.type,
                     url: image.url,
                 }
             } else {
@@ -76,11 +76,13 @@ const ReviewAlbum = () => {
         try {
            const docRef = await db.collection('albums').add({
                 title,
-                owner: album.owner
+                owner: album.owner,
+                reviewedAlbum: true
             });
             
             await likedImages.forEach(likedImage => {
-
+                storage.ref(`images/guest/${likedImage.name}`).put(likedImage);
+                
                 if (albumId) {
                     likedImage.album = db.collection('albums').doc(docRef.id)
                     likedImage.owner = album.owner
@@ -97,20 +99,20 @@ const ReviewAlbum = () => {
     const toggleThumbs = (id, reaction) => {
         let card = document.getElementById(id);
         if (reaction === true) {
-            card.getElementsByClassName('thumbs-up')[0].classList.add('thumb-active');
-            card.getElementsByClassName('thumbs-down')[0].classList.remove('thumb-active');
+            card.getElementsByClassName('check')[0].classList.add('check-active');
+            card.getElementsByClassName('cross')[0].classList.remove('cross-active');
         } else if (reaction === false) {
-            card.getElementsByClassName('thumbs-down')[0].classList.add('thumb-active');
-            card.getElementsByClassName('thumbs-up')[0].classList.remove('thumb-active');
+            card.getElementsByClassName('cross')[0].classList.add('cross-active');
+            card.getElementsByClassName('check')[0].classList.remove('check-active');
         }
     }
 
     return (
         <Container fluid className="px-4">
-            <h2 className="text-center">You are currently reviewing {album && album.title}</h2>
+            <h2 className="text-left">You are currently reviewing: {album && album.title}</h2>
 
             <SRLWrapper>
-                <Row className="justify-content-md-center">
+                <Row className="justify-content-md-left">
                     {loading
                         ? (<ClipLoader/>)
                         
@@ -124,20 +126,20 @@ const ReviewAlbum = () => {
                                         <Card.Body className="d-flex justify-content-between" id={image.id}>
                                             <button 
                                                 style={{ border: "none", backgroundColor: "transparent" }} 
-                                                className="thumbs-up"
+                                                className="check"
                                                 onClick={() => updateImage(image, true)} >
                                                     <FontAwesomeIcon 
-                                                        icon={faThumbsUp}
+                                                        icon={faCheck}
                                                         style={{ fontSize: "1.5em", margin: "0 0.5em" }} 
                                                         />
                                             </button>
 
                                             <button 
                                                 style={{ border: "none", backgroundColor: "transparent" }} 
-                                                className="thumbs-down"
+                                                className="cross"
                                                 onClick={() => updateImage(image, false)} >
                                                     <FontAwesomeIcon 
-                                                        icon={faThumbsDown} 
+                                                        icon={faTimes} 
                                                         style={{ fontSize: "1.5em", margin: "0 0.5em"}} 
                                                         />
                                             </button>
@@ -152,12 +154,12 @@ const ReviewAlbum = () => {
 
             {
                 reviewedImages && likedImages.length > 0 && (
-                    <div className="text-center mt-3">
+                    <div className="text-left mt-3">
                         <p>Liked Images: {likedImages.length} / {images.length}</p>
-                        <div className="d-flex justify-content-center">
+                        <div className="d-flex justify-content-left">
                             <Button 
                                 disabled={disabledBtn} 
-                                variant="dark" 
+                                variant="primary" 
                                 className="mr-3" 
                                 onClick={handleSendReview}>
                                     Send Review

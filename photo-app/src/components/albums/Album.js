@@ -9,11 +9,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPen } from '@fortawesome/free-solid-svg-icons'
 import { ClipLoader } from 'react-spinners'
 
+
 const Album = () => {
 	const [reviewLink, setReviewLink] = useState(null)
 	const { albumId } = useParams()
 	const { album, images, loading } = useAlbum(albumId)
 	const [editTitle, setEditTitle] = useState(false)
+	
+
 
 	const handleEditTitle = () => {
         setEditTitle(true);
@@ -24,7 +27,7 @@ const Album = () => {
         let url = `${urlOrigin}/review/${album}`;
         setReviewLink(url);
 	}
-	
+
 	return (
 		<>	
 			{loading
@@ -56,6 +59,7 @@ const Album = () => {
 				
 					<UploadAlbumImage albumId={albumId} />
 					<ImagesView images={images} />
+					
 
 						
 					

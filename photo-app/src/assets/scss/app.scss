@@ -9,10 +9,14 @@
      cursor: pointer; 
     }
     
-.thumbs-up,
-.thumbs-down {
-     color: gray;
-}
-.thumb-active {
-     color: rgb(71, 71, 241);
-}
+    .check,
+    .cross {
+        color: gray;
+    }
+    .cross-active {
+        color: red;
+    }
+
+    .check-active {
+     color: green;
+ }

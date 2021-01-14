@@ -11,7 +11,7 @@ const ImagesView = ({ images }) => {
 
 	const handleDeleteImage = (image) => {
 		// eslint-disable-next-line no-restricted-globals
-		if (confirm(`Are you really sure you want to delete the image\n"${image.name}"?`)) {
+		if (confirm(`Are you sure you want to delete the image\n"${image.name}"?`)) {
 			setDeleteImage(image);
 		}
 	}
