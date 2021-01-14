@@ -5,6 +5,84 @@
  @import "~bootstrap/scss/bootstrap";
  @import "dropzone";
 
+$color-main-green: #253840;
+$color-light-green:#b0b0b0;
+$color-main-pink:#D9ACA3;
+$color-grey: #8A9BA6;
+$color-dark-grey: #1F1C26;
+
+
+body {
+    background-image: url('./images/background.jpg');
+    background-color: $color-light-green;
+    color: $color-dark-grey;
+    background-size: cover;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Lato', sans-serif;
+}
+
+p {
+    font-family: 'Merriweather', sans-serif;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    color: $color-dark-grey
+}
+
+.btn-standard {
+    background-color: $color-main-green;
+    color: #fff;
+    border: none;
+}
+.btn-standard:hover,
+.btn-standard:disabled 
+.btn-standard:active 
+.btn-standard:visited {
+    background-color: $color-dark-grey !important;
+    color: $color-main-pink !important;
+}
+
+.navbar {
+    background-color: $color-main-green;
+    .navbar-brand {
+        color: #fff;
+        font-family: 'Raleway', sans-serif;
+        font-size: 1.5em;
+    }
+    .navbar-brand:hover {
+        color: $color-main-pink;
+    }
+    .navbar-brand:visited {
+        color: $color-light-green
+    }
+    .navbar-nav .nav-link {
+        color: #fff;
+    }
+    .navbar-nav a.nav-link:hover {
+        color: $color-main-pink;
+    }
+    .navbar-nav a.nav-link.active {
+        color: #878A86
+    }
+    .navbar-toggler {
+        border: none;
+    }
+}
+
+div.card {
+    background-color: $color-light-green !important;
+    margin-top: 1em;
+}
+
+img {
+    padding: 2em;
+}
 .edit_album_title { 
      cursor: pointer; 
     }
@@ -19,4 +97,8 @@
 
     .check-active {
      color: green;
+ }
+
+ .selected-photos {
+     color: #fff;
  }

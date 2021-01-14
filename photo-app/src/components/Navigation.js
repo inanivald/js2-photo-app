@@ -12,10 +12,10 @@ const Navigation = () => {
 
 	return (
 		<div>
-			<Navbar bg="dark" variant="dark">
+			<Navbar className="navbar">
 				<Container>
 					<Link to="/" className="navbar-brand">
-						Photo app
+						Photo review 
 					</Link>
 
 					<Navbar.Toggle aria-controls="basic-navbar-nav" />

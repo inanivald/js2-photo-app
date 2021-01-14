@@ -4,7 +4,7 @@ import { SRLWrapper } from 'simple-react-lightbox'
 import { useAuth } from '../../contexts/AuthContext'
 import useDeleteImage from '../../hooks/useDeleteImage'
 
-const ImagesView = ({ images }) => {
+const ImagesView = ({ images, updateSelectedImages}) => {
 	const [deleteImage, setDeleteImage] = useState(null);
 	const { currentUser } = useAuth()
 	useDeleteImage(deleteImage);
@@ -26,6 +26,16 @@ const ImagesView = ({ images }) => {
 								<Card.Img variant="top" src={image.url} title={image.name} />
 							</a>
 							<Card.Body>
+							<div>
+                                        <input 
+                                            type="checkbox" 
+                                            id={image.id} 
+                                            name="selected-photo" 
+                                            className="mr-2" 
+                                            onChange={updateSelectedImages}
+                                            />
+                                        <label htmlFor="selected-photo" className="ms-2">Select image</label>
+                                    </div>
 								<Card.Text className="text-muted small">
 									{image.name} ({Math.round(image.size/1024)} kb)
 								</Card.Text>

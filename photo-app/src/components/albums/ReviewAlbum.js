@@ -110,6 +110,7 @@ const ReviewAlbum = () => {
     return (
         <Container fluid className="px-4">
             <h2 className="text-left">You are currently reviewing: {album && album.title}</h2>
+            <p>Please choose which images you want to keep.</p>
 
             <SRLWrapper>
                 <Row className="justify-content-md-left">
